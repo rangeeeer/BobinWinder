@@ -15,11 +15,17 @@ bool STOP = true;
 Engine::Engine(InitData data){
     _data=data;
 }
-
-
 void Engine::start(){
     Serial.begin(115200);
-    Serial.println("Engine is running");
-    Serial.print("code is running on core ");
+    xTaskCreatePinnedToCore(DisplayTaskFunction,"DisplayTask",10000,NULL,1,&DisplayTask,0);
+    xTaskCreatePinnedToCore(ControlTaskFunction,"ControlTask",10000,NULL,1,&ControlTask,1);
+}
+void Engine::ControlTaskFunction(void * parameters){
     Serial.println(xPortGetCoreID());
 }
+
+void Engine::DisplayTaskFunction(void * parameters){
+    Serial.println(xPortGetCoreID());
+}
+
+

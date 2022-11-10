@@ -1,8 +1,0 @@
-{
-    "board": "esp32:esp32:esp32doit-devkit-v1",
-    "sketch": "src\\V1\\main.ino",
-    "output": ".\\build",
-    "port": "COM6",
-    "configuration": "FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
-    "programmer": "esp32:esptool"
-}
