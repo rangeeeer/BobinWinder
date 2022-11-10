@@ -9,7 +9,7 @@ DebouncedPushButton::DebouncedPushButton(int pin,long DebounceTimeUS,bool pullup
   _DebounceTimeUS = DebounceTimeUS;
   _pullup = pullup;
   if(pullup){
-    pinMode(pin,INPUT_PULLUP);
+  pinMode(pin,INPUT_PULLUP);
   }
   else{
     pinMode(pin,INPUT);
