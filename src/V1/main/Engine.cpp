@@ -12,20 +12,28 @@ bool HOLDER_DIRECTION = true;
 bool START_CLICK = false;
 bool PAUSE = false;
 bool STOP = true;
-Engine::Engine(InitData data){
-    _data=data;
-}
-void Engine::start(){
-    Serial.begin(115200);
-    xTaskCreatePinnedToCore(DisplayTaskFunction,"DisplayTask",10000,NULL,1,&DisplayTask,0);
-    xTaskCreatePinnedToCore(ControlTaskFunction,"ControlTask",10000,NULL,1,&ControlTask,1);
-}
-void Engine::ControlTaskFunction(void * parameters){
+TaskHandle_t DisplayTask;
+TaskHandle_t ControlTask;
+
+
+void Engine::ControlTaskFunction(void * parameter) {
+  while(true){
     Serial.println(xPortGetCoreID());
+    delay(1000);
+  }
 }
 
-void Engine::DisplayTaskFunction(void * parameters){
+void Engine::DisplayTaskFunction(void * parameter) {
+  while(true){
     Serial.println(xPortGetCoreID());
+    delay(1000);
+  }
 }
-
-
+Engine::Engine(InitData data) {
+  _data = data;
+}
+void Engine::start() {
+  Serial.begin(115200);
+  xTaskCreatePinnedToCore(ControlTaskFunction, "ControlTask", 10000, NULL, 1, &ControlTask, 1);
+  xTaskCreatePinnedToCore(DisplayTaskFunction, "DisplayTask", 10000, NULL, 1, &DisplayTask, 0);
+}
