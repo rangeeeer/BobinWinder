@@ -63,7 +63,7 @@ public:
     void SetMidButtonPin(uint8_t pin);
     void SetDownButtonPin(uint8_t pin);
 
-    InitData getInitData();
+    InitData getInitiator();
 
     // Other Methods
 

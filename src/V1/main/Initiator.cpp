@@ -23,7 +23,7 @@ void Initiator::SetUpButtonPin(uint8_t pin) { }
 void Initiator::SetMidButtonPin(uint8_t pin) { }
 
 void Initiator::SetDownButtonPin(uint8_t pin) { }
-InitData Initiator::getInitData(){
+InitData Initiator::getInitiator(){
     InitData data={ _PINS, _VARS };
     return data;
 }

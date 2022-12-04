@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Initiator.h"
 #include "Arduino.h"
+#include "Display/DisplayCore.h"
 
 
 
@@ -15,7 +16,7 @@ bool STOP = true;
 TaskHandle_t DisplayTask;
 TaskHandle_t ControlTask;
 
-
+ 
 void Engine::ControlTaskFunction(void * parameter) {
   while(true){
     Serial.println(xPortGetCoreID());
