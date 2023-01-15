@@ -51,6 +51,7 @@ void setup()
     vars.PULSE_TIME_MICROSECOND = 1;
     Initiator initiator(pins, vars);
     Engine eng(initiator.getInitiator());
+    delete InitVars;
     eng.start();
 }
 

@@ -15,11 +15,7 @@ class Engine{
     public:
         Engine(InitData);
         void start();
-        static void DisplayTaskFunction(void * parameters);
-        static void ControlTaskFunction(void * parameters);
 
-    private:
-        InitData _data;
 };
 
 #endif

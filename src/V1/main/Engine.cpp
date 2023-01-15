@@ -4,7 +4,7 @@
 #include "Display/DisplayCore.h"
 
 
-
+uint8_t menu[4]={0,0,0,0};
 uint16_t WINDER_GOAL_TURNS = 1000;
 uint16_t WINDER_ANGLE_IN_PULSE = 0;
 uint16_t WINDER_TURNS = 0;
@@ -16,22 +16,23 @@ bool STOP = true;
 TaskHandle_t DisplayTask;
 TaskHandle_t ControlTask;
 
+InitData vars_pins;
  
-void Engine::ControlTaskFunction(void * parameter) {
+void ControlTaskFunction(void * parameter) {
   while(true){
-    Serial.println(xPortGetCoreID());
+    Serial.println(vars_pins.vars.WINDER_MOTOR_PULSE_PER_TURN);
     delay(1000);
   }
 }
 
-void Engine::DisplayTaskFunction(void * parameter) {
+void DisplayTaskFunction(void * parameter) {
   while(true){
-    Serial.println(xPortGetCoreID());
+    Serial.println(2);
     delay(1000);
   }
 }
-Engine::Engine(InitData data) {
-  _data = data;
+Engine::Engine(InitData enginePins) {
+  vars_pins = enginePins;
 }
 void Engine::start() {
   Serial.begin(115200);
