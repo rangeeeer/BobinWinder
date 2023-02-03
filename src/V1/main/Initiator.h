@@ -4,39 +4,44 @@
 typedef struct InitPins {
 
     // display pins
-    uint8_t DISPLAY_RS_PIN;
-    uint8_t DISPLAY_RW_PIN;
-    uint8_t DISPLAY_EN_PIN;
-    uint8_t DISPLAY_D4_PIN;
-    uint8_t DISPLAY_D5_PIN;
-    uint8_t DISPLAY_D6_PIN;
-    uint8_t DISPLAY_D7_PIN;
-    // sensor pins
-    uint8_t WINDER_HALL_ANALOG_PIN;
-    uint8_t HOLDER_HALL_ANALOG_PIN;
+    uint8_t displayRsPin;
+    uint8_t displayRwPin;
+    uint8_t displayEnPin;
+    uint8_t displayD4pin;
+    uint8_t displayD5pin;
+    uint8_t displayD6pin;
+    uint8_t displayD7pin;
+
+    // hall sensor pins
+    uint8_t winderHalAnalogPin;
+    uint8_t holderHalAnalogPin;
 
     // motor pins
-    uint8_t WINDER_DIRECTION_PIN;
-    uint8_t WINDER_CLICK_PIN;
-    uint8_t WINDER_ENABLE_PIN;
-    uint8_t HOLDER_DIRECTION_PIN;
-    uint8_t HOLDER_CLICK_PIN;
-    uint8_t HOLDER_ENABLE_PIN;
+    uint8_t winderDirPin;
+    uint8_t winderClkPin;
+    uint8_t holderDirPin;
+    uint8_t holderClkPin;
+    uint8_t motorsEnPin;
     // button pins
-    uint8_t DOWN_BUTTON_PIN;
-    uint8_t MID_BUTTON_PIN;
-    uint8_t UP_BUTTON_PIN;
+    uint8_t DbuttonPin;
+    uint8_t MbuttonPin;
+    uint8_t UbuttonPin;
+
+    // potentiometer pin
+    uint8_t potentiometerAnalogPin;
+    
+
 } InitPins;
 
 typedef struct InitVars {
 
-    uint16_t WINDER_MOTOR_PULSE_PER_TURN;
-    uint8_t WINDER_MOTOR_DRIVER_MICROPULSE;
-    uint16_t HOLDER_MOTOR_PULSE_PER_TURN;
-    uint8_t HOLDER_MOTOR_DRIVER_MICROPULSE;
-    uint16_t HOLDER_SCREW_PITCH_MICROMETER;
-    uint32_t DEBOUNCE_DELAY_MICROSECONDS;
-    uint8_t PULSE_TIME_MICROSECOND;
+    uint16_t winderSPT; //step per turn
+    uint8_t  winderDriverMP; // driver micro step
+    uint16_t holderSPT; //step per turn
+    uint8_t  holderDriverMP; // driver micro step
+    uint16_t holderScrewPitchMM;  //holder Screw pitch in micro meter
+    uint32_t debounceDelayMS;  //debounce delay in micro seconds
+    uint8_t  pulseTimeMS;  //pulse time in micro seconds
 } InitVars;
 
 typedef struct InitData {

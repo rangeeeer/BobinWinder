@@ -1,19 +1,15 @@
 #include "DebouncedPushButton.h"
 
 
-DebouncedPushButton::DebouncedPushButton(int pin,long DebounceTimeUS,bool pullup) {
+DebouncedPushButton::DebouncedPushButton(int pin,unsigned long DebounceTimeUS,bool pullup) {
   _pin = pin; 
   _state = LOW;
   _lastState = LOW;
   _lastDebounceTime = micros();
   _DebounceTimeUS = DebounceTimeUS;
   _pullup = pullup;
-  if(pullup){
-  pinMode(pin,INPUT_PULLUP);
-  }
-  else{
-    pinMode(pin,INPUT);
-  }
+  pinMode(pin,INPUT);
+  
 }
 
 bool DebouncedPushButton::debouncedRead() {

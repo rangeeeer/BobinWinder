@@ -20,14 +20,12 @@ InitData vars_pins;
  
 void ControlTaskFunction(void * parameter) {
   while(true){
-    Serial.println(vars_pins.vars.WINDER_MOTOR_PULSE_PER_TURN);
     delay(1000);
   }
 }
 
 void DisplayTaskFunction(void * parameter) {
   while(true){
-    Serial.println(2);
     delay(1000);
   }
 }
@@ -35,7 +33,6 @@ Engine::Engine(InitData enginePins) {
   vars_pins = enginePins;
 }
 void Engine::start() {
-  Serial.begin(115200);
   xTaskCreatePinnedToCore(ControlTaskFunction, "ControlTask", 10000, NULL, 1, &ControlTask, 1);
   xTaskCreatePinnedToCore(DisplayTaskFunction, "DisplayTask", 10000, NULL, 1, &DisplayTask, 0);
 }

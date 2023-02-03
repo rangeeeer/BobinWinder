@@ -1,6 +1,6 @@
 #include "Engine.h"
 #include "Initiator.h"
-
+#include "DebouncedPushButton.h"
 InitPins pins;
 InitVars vars;
 
@@ -10,49 +10,92 @@ void setup()
 {
 
     // display pins
-    pins.DISPLAY_RS_PIN = 0;
-    pins.DISPLAY_RW_PIN = 1;
-    pins.DISPLAY_EN_PIN = 2;
-    pins.DISPLAY_D4_PIN = 3;
-    pins.DISPLAY_D5_PIN = 4;
-    pins.DISPLAY_D6_PIN = 5;
-    pins.DISPLAY_D7_PIN = 6;
-
-
+    pins.displayRsPin = 16;
+    pins.displayRwPin = 17;
+    pins.displayEnPin = 18;
+    pins.displayD4pin = 19;
+    pins.displayD5pin = 21;
+    pins.displayD6pin = 22;
+    pins.displayD7pin = 23;
 
     // sensor pins
-    pins.WINDER_HALL_ANALOG_PIN = 10;
-    pins.HOLDER_HALL_ANALOG_PIN = 11;
-
-
+    pins.winderHalAnalogPin = 35;
+    pins.holderHalAnalogPin = 32;
 
     // motor pins
-    pins.WINDER_DIRECTION_PIN = 12;
-    pins.WINDER_CLICK_PIN = 13;
-    pins.WINDER_ENABLE_PIN = 14;
-    pins.HOLDER_DIRECTION_PIN = 15;
-    pins.HOLDER_CLICK_PIN = 16;
-    pins.HOLDER_ENABLE_PIN = 17;
-
-
+    pins.winderDirPin = 26;
+    pins.winderClkPin = 25;
+    pins.holderDirPin = 14;
+    pins.holderClkPin = 27;
+    pins.motorsEnPin = 33;
+    pins.potentiometerAnalogPin = 13;
 
     // button pins
-    pins.DOWN_BUTTON_PIN = 18;
-    pins.MID_BUTTON_PIN = 19;
-    pins.UP_BUTTON_PIN = 20;
+    pins.DbuttonPin = 18;
+    pins.MbuttonPin = 19;
+    pins.UbuttonPin = 20;
 
     // define constants
-    vars.WINDER_MOTOR_PULSE_PER_TURN = 200;
-    vars.WINDER_MOTOR_DRIVER_MICROPULSE = 16;
-    vars.HOLDER_MOTOR_PULSE_PER_TURN = 200;
-    vars.HOLDER_MOTOR_DRIVER_MICROPULSE = 16;
-    vars.HOLDER_SCREW_PITCH_MICROMETER = 1500;
-    vars.DEBOUNCE_DELAY_MICROSECONDS = 100000;
-    vars.PULSE_TIME_MICROSECOND = 1;
+    vars.winderSPT = 200;
+    vars.winderDriverMP = 8;
+    vars.holderSPT = 200;
+    vars.holderDriverMP = 8;
+    vars.holderScrewPitchMM = 1500;
+    vars.debounceDelayMS = 100000;
+    vars.pulseTimeMS = 30;
+
+    pinMode(pins.winderClkPin, OUTPUT);
+    pinMode(pins.winderDirPin, OUTPUT);
+    pinMode(pins.holderClkPin, OUTPUT);
+    pinMode(pins.holderDirPin, OUTPUT);
+    pinMode(pins.potentiometerAnalogPin, INPUT);
+
+    int numberOfTurns = 10000;
+    int wireDiameterUM = 50;
+    int windingScater = 50;
+    int count = 10000;
+    bool start = false;
+    bool pause = false;
+    int delay;
+    int distanceturn = wireDiameterUM + (wireDiameterUM * windingScater / 100);
+    int bobinWidthUM = 11500;
+    int winderpulsePosition = 0;
+    int winderPPT=vars.winderSPT*vars.winderDriverMP
+    int holderPPT=vars.holderSPT*vars.holderDriverMP
+    
+
+    while (true)
+    {   
+        digitalWrite(pins.holderDirPin, HIGH);
+        for (int i = 0; i < count; i++)
+        {
+            delay = potcalc(pins.potentiometerAnalogPin);
+            digitalWrite(pins.holderClkPin, HIGH);
+            digitalWrite(pins.winderClkPin, HIGH);
+            delayMicroseconds(vars.pulseTimeMS);
+            digitalWrite(pins.holderClkPin, LOW);
+            digitalWrite(pins.winderClkPin, LOW);
+            delayMicroseconds(delay);
+        }
+        digitalWrite(pins.holderDirPin, LOW);
+        for (int i = 0; i < count; i++)
+        {
+            delay = potcalc(pins.potentiometerAnalogPin);
+            digitalWrite(pins.holderClkPin, HIGH);
+            digitalWrite(pins.winderClkPin, HIGH);
+            delayMicroseconds(vars.pulseTimeMS);
+            digitalWrite(pins.holderClkPin, LOW);
+            digitalWrite(pins.winderClkPin, LOW);
+            delayMicroseconds(delay);
+        }
+    }
     Initiator initiator(pins, vars);
     Engine eng(initiator.getInitiator());
-    delete InitVars;
     eng.start();
 }
 
+int potcalc(uint8_t pin){
+    int var= analogRead(pin);
+    return (var/4) + 30;
+}
 void loop() { }

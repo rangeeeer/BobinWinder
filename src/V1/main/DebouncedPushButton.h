@@ -4,7 +4,7 @@
 
 class DebouncedPushButton{
   public:
-    DebouncedPushButton(int pin,long DebounceTimeUS,bool pullup);
+    DebouncedPushButton(int pin,unsigned long DebounceTimeUS,bool pullup);
     bool debouncedRead(void);
     int getPinNumber(void);
   private:
@@ -13,6 +13,6 @@ class DebouncedPushButton{
     int _state;
     int _lastState;
     unsigned long _lastDebounceTime;
-    long _DebounceTimeUS;    
+    unsigned long _DebounceTimeUS;    
 };
 #endif
